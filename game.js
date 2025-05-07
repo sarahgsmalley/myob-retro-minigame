@@ -764,8 +764,10 @@ function showStartScreen() {
   
   // Draw all text with the same bounce effect
   drawTextWithShadow('MYOB Retro Runner', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2 - 40) + bounce, 40, true);
-  drawTextWithShadow('Press Space or Up Arrow to Jump', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2) + bounce, 24);
-  drawTextWithShadow('Collect coins for extra score, avoid the Tax Man!', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2 + 40) + bounce, 24);
+  drawTextWithShadow('Press Space or Up Arrow to Jump, twice for Double Jump!', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2) + bounce, 22);
+  drawTextWithShadow('Collect coins for extra score, some are worth triple!', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2 + 36) + bounce, 22);
+  drawTextWithShadow('Collect 20 coins for a Power-Up!', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2 + 72) + bounce, 22);
+  drawTextWithShadow('Press Space or Up Arrow to Start', CANVAS_WIDTH / 2, (CANVAS_HEIGHT / 2 + 120) + bounce, 20, true);
 }
 
 // ====== ASSET LOADING AND MAIN ======
