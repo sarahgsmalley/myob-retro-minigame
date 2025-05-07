@@ -660,8 +660,8 @@ function render() {
   // Game over overlay with shadows
   if (gameState === 'gameover') {
     ctx.save();
-    ctx.globalAlpha = 0.80;
-    ctx.fillStyle = COLOR_VERY_LIGHT_PURPLE; // Use the very light purple color
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.globalAlpha = 1;
     
@@ -682,7 +682,7 @@ function render() {
     }
     
     // Game Over title in pink with shadow
-    drawGameOverText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 30, 48, COLOR_PINK, true);
+    drawGameOverText('Game Over', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 30, 48, '#FFFFFF', true);
     
     // Scores with shadow - in white
     drawGameOverText(`Coins Collected: ${score}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 10, 24, '#FFFFFF');
@@ -694,11 +694,48 @@ function render() {
     const buttonX = CANVAS_WIDTH / 2 - buttonWidth / 2;
     const buttonY = CANVAS_HEIGHT / 2 + 70;
     
-    // Draw button with subtle shadow
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-    ctx.fillRect(buttonX + 3, buttonY + 3, buttonWidth, buttonHeight);
-    ctx.fillStyle = COLOR_PINK;
-    ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+    // Draw drop shadow
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.35)';
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 4;
+    // Gradient for button background
+    const grad = ctx.createLinearGradient(buttonX, buttonY, buttonX, buttonY + buttonHeight);
+    grad.addColorStop(0, '#a46cff'); // Lighter purple top
+    grad.addColorStop(1, COLOR_PURPLE); // MYOB purple bottom
+    ctx.fillStyle = grad;
+    // Draw rounded rectangle for button background
+    const radius = 16;
+    ctx.beginPath();
+    ctx.moveTo(buttonX + radius, buttonY);
+    ctx.lineTo(buttonX + buttonWidth - radius, buttonY);
+    ctx.quadraticCurveTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + radius);
+    ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - radius);
+    ctx.quadraticCurveTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - radius, buttonY + buttonHeight);
+    ctx.lineTo(buttonX + radius, buttonY + buttonHeight);
+    ctx.quadraticCurveTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - radius);
+    ctx.lineTo(buttonX, buttonY + radius);
+    ctx.quadraticCurveTo(buttonX, buttonY, buttonX + radius, buttonY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+    // White border
+    ctx.save();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.beginPath();
+    ctx.moveTo(buttonX + radius, buttonY);
+    ctx.lineTo(buttonX + buttonWidth - radius, buttonY);
+    ctx.quadraticCurveTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + radius);
+    ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - radius);
+    ctx.quadraticCurveTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - radius, buttonY + buttonHeight);
+    ctx.lineTo(buttonX + radius, buttonY + buttonHeight);
+    ctx.quadraticCurveTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - radius);
+    ctx.lineTo(buttonX, buttonY + radius);
+    ctx.quadraticCurveTo(buttonX, buttonY, buttonX + radius, buttonY);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
     
     // Button text - "Play Again?" - with matching shadow style and white text
     drawGameOverText('Play Again?', CANVAS_WIDTH / 2, buttonY + buttonHeight/2 + 7, 22, '#FFFFFF', true);
@@ -733,6 +770,13 @@ function showStartScreen() {
   
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   drawBackground();
+
+  // Add transparent black overlay for the start screen ONLY here
+  ctx.save();
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.restore();
   
   // Improved shadow function for bouncing text to prevent jitter
   function drawTextWithShadow(text, x, y, fontSize, isBold = false) {
