@@ -2,6 +2,8 @@
 
 An HTML5 Canvas-based endless runner game featuring the MYOB brand colours and theme.
 
+[Click here to try it out!]https://sarahgsmalley.github.io/myob-retro-minigame/
+
 ![MYOB Retro Runner Game Screenshot](assets/game-screenshot.png)
 
 ## Game Description
